@@ -1,8 +1,10 @@
 import sys
+import glob
 import csv
 import json
 from collections import Counter
 
+# https://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
 maxInt = sys.maxsize
 while True: # decrease the maxInt value by factor 10 as long as the OverflowError occurs
     try:
@@ -11,9 +13,11 @@ while True: # decrease the maxInt value by factor 10 as long as the OverflowErro
     except OverflowError:
         maxInt = int(maxInt/10)
 
-SRC_FILEPATHS = ["english/CORE_en.tsv", "french/CORE_fr.tsv", "swedish/CORE_sw.tsv", "finnish/CORE_fi.tsv"]
+filepaths = glob.glob("corpus/*.tsv")
 
-for filepath in SRC_FILEPATHS:
+for filepath in filepaths:
+    lang = filepath[7:-4]
+    print(f"start analysis of {lang}")
     counter = Counter()
     with open(filepath, "rt", encoding="utf-8") as src_file:
         src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
@@ -26,8 +30,9 @@ for filepath in SRC_FILEPATHS:
     percentages = {k : v / total * 100 for k, v in counts.items()}
     
     counts["total"] = total
-    output_filepath = filepath[:-4] + "_summary.json"
+    output_filepath = f"summaries/{lang}.json"
 
     with open(output_filepath, "w") as file:
         json.dump({"counts" : counts, "percentages" : percentages}, file, indent=4)
-    print(f"completed analysis of {filepath}")
+    print(f"completed analysis of {lang}")
+print("completed all analyses")

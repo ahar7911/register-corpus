@@ -6,4 +6,4 @@
 # git clone https://github.com/TurkuNLP/Multilingual-register-corpora.git
 # # git clone FinCORE
 
-source CORE/standardize_core.sh
+source utils_CORE/standardize_core.sh
