@@ -1,24 +1,42 @@
 #! /bin/bash
 
 cd ..
+# create folder for storing original corpuses
 mkdir original-corpus
 cd original-corpus
 
-curl -sL -o CORE_en.tar.gz https://api.github.com/repos/TurkuNLP/CORE-corpus/tarball/ 
+# CORE
+curl -L -o CORE_en.tar.gz https://api.github.com/repos/TurkuNLP/CORE-corpus/tarball/ 
 tar -xvf CORE_en.tar.gz
+echo "CORE download and extraction complete"
 
-curl -sL -o CORE_fr_sw.tar.gz https://api.github.com/repos/TurkuNLP/Multilingual-register-corpora/tarball
+#FreCORE and SweCORE
+curl -L -o CORE_fr_sw.tar.gz https://api.github.com/repos/TurkuNLP/Multilingual-register-corpora/tarball
 tar -xvf CORE_fr_sw.tar.gz
+echo "FreCORE/SweCORE download and extraction complete"
 
+# FinCORE
 mkdir FinCORE_full
 cd FinCORE_full
-curl -sL -o dev.tsv https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/dev.tsv
-curl -sL -o fincore_labels.txt https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/fincore_labels.txt
-curl -sL -o test.tsv https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/test.tsv
-curl -sL -o train.tsv https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/train.tsv
+curl -L -o dev.tsv https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/dev.tsv
+curl -L -o fincore_labels.txt https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/fincore_labels.txt
+curl -L -o test.tsv https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/test.tsv
+curl -L -o train.tsv https://github.com/TurkuNLP/FinCORE_full/releases/download/v1.0/train.tsv
 cd ..
+echo "FinCORE download and extraction complete"
 
-curl -sL -o CORE_multi.tar.gz https://api.github.com/repos/TurkuNLP/pytorch-registerlabeling/tarball/
-tar -xvf CORE_multi.tar.gz */data
+# multilang CORE
+curl -L -o CORE_multi.tar.gz https://api.github.com/repos/TurkuNLP/pytorch-registerlabeling/tarball/
+tar -xvf CORE_multi.tar.gz --wildcards "*/data"
+echo "multilang CORE download and extraction complete"
+
+# renaming Github directories, removes "OWNER-" (here "TurkuNLP-"") and "-#######" (number of the commit ref)
+for dir in */; do #
+  if [ -d "$dir" ]; then
+    new_dir=$(echo $dir | cut -d '-' -f 2- | rev | cut -d '-' -f 2- | rev)
+    if [[ "$dir" == "$new_dir" ]]; then
+        mv $dir $new_dir
+    fi
+done
 
 cd ../register-corpus
