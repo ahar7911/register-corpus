@@ -34,7 +34,7 @@ echo "multilang CORE download and extraction complete"
 for dir in */; do #
   if [ -d "$dir" ]; then
     new_dir=$(echo $dir | cut -d '-' -f 2- | rev | cut -d '-' -f 2- | rev)
-    if [[ "$dir" == "$new_dir" ]]; then
+    if [ "$dir" != "$new_dir" ]; then
         mv $dir $new_dir
     fi
 done
