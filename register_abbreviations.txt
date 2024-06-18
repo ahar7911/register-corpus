@@ -1,0 +1,8 @@
+IN  Informational Description/Explanation
+IP/OP   Informational Persuasion/Opinion
+RN  Recreational Narrative
+JN  Journalistic Narrative
+HI  How-to/Instructional
+LY  Lyrical
+NID Natural Interactive Discussion
+AID Artificial Interactive Discussion

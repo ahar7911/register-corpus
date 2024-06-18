@@ -1,0 +1,236 @@
+{
+    "IN" : {
+        "name" : "Informational Description/Explanation",
+        "maps" : "IN",
+        "subcategories" : {
+            "CM" : {
+                "name" : "Course materials"
+            },
+            "DP" : {
+                "name" : "Description of a person"
+            },
+            "DT" : {
+                "name" : "Description of a thing"
+            },
+            "EN" : {
+                "name" : "Encyclopedia article"
+            },
+            "FI" : {
+                "name" : "FAQ about information"
+            },
+            "IB" : {
+                "name" : "Information blog"
+            },
+            "LT" : {
+                "name" : "Legal terms and conditions"
+            },
+            "OI" : {
+                "name" : "Other information"
+            },
+            "RA" : {
+                "name" : "Research article"
+            },
+            "TR" : {
+                "name" : "Technical report"
+            },
+
+            "JD" : {
+                "name" : "Job description (FinCORE only)"
+            },
+            "FA" : {
+                "name" : "FAQs (FinCORE only)"
+            },
+            "RP" : {
+                "name" : "Report (FinCORE only)"
+            }
+        }
+    },
+    "NA" : {
+        "name" : "Narrative",
+        "subcategories" : {
+            "HA" : {
+                "name" : "Historical article",
+                "maps" : "JN"
+            },
+            "MA" : {
+                "name" : "Magazine article",
+                "maps" : "JN"
+            },
+            "NE" : {
+                "name" : "News report/blog",
+                "maps" : "JN"
+            },
+            "ON" : {
+                "name" : "Other narrative"
+            },
+            "PB" : {
+                "name" : "Personal blog",
+                "maps" : "JN"
+            },
+            "SR" : {
+                "name" : "Sports report",
+                "maps" : "JN"
+            },
+            "SS" : {
+                "name" : "Short story",
+                "maps" : "RN"
+            },
+            "TB" : {
+                "name" : "Travel blog",
+                "maps" : "JN"
+            },
+
+
+            "DP" : {
+                "name" : "Description of a person (not in original CORE typology, but present in corpus)",
+                "maps" : "JN"
+            },
+            "FC" : {
+                "name" : "Story (FinCORE only)",
+                "maps" : "RN"
+            },
+            "CB" : {
+                "name" : "Community blog (FinCORE only)",
+                "maps" : "JN"
+            },
+            "OA" : {
+                "name" : "Magazine/online article (FinCORE only)",
+                "maps" : "JN"
+            }
+        }
+    },
+    "IP" : {
+        "name" : "Informational Persuasion",
+        "maps" : "IP/OP",
+        "subcategories" : {
+            "DS" : {
+                "name" : "Description with intent to sell"
+            },
+            "ED" : {
+                "name" : "Editorial"
+            },
+            "OE" : {
+                "name" : "Other"
+            },
+            "PA" : {
+                "name" : "Persuasive article or essay"
+            },
+
+            "EB" : {
+                "name" : "News-opinion blog/editorial (FinCORE only)"
+            }
+        }
+    },
+    "OP" : {
+        "name" : "Opinion",
+        "maps" : "IP/OP",
+        "subcategories" : {
+            "AD" : {
+                "name" : "Advertisement"
+            },
+            "AV" : {
+                "name" : "Advice"
+            },
+            "LE" : {
+                "name" : "Letter to the editor"
+            },
+            "OB" : {
+                "name" : "Opinion blog"
+            },
+            "OO" : {
+                "name" : "Other opinion"
+            },
+            "RS" : {
+                "name" : "Religious blogs/sermons"
+            },
+            "RV" : {
+                "name" : "Reviews"
+            }
+        }
+    },
+    "ID" : {
+        "name" : "Interactive Discussion",
+        "maps" : "NID",
+        "subcategories" : {
+            "DF" : {
+                "name" : "Discussion forum"
+            },
+            "OF" : {
+                "name" : "Other forum"
+            },
+            "QA" : {
+                "name" : "Question/answer forum"
+            },
+            "RR" : {
+                "name" : "Reader/viewer responses"
+            }
+        }
+    },
+    "HI" : {
+        "name" : "How-To/Instructional",
+        "maps" : "HI",
+        "subcategories" : {
+            "FH" : {
+                "name" : "FAQ about how-to"
+            },
+            "HT" : {
+                "name" : "How-to"
+            },
+            "OH" : {
+                "name" : "Other how-to"
+            },
+            "RE" : {
+                "name" : "Recipe"
+            },
+            "TS" : {
+                "name" : "Technical support"
+            }
+        }
+    },
+    "LY" : {
+        "name" : "Lyrical",
+        "maps" : "LY",
+        "subcategories" : {
+            "OL" : {
+                "name" : "Other lyrical"
+            },
+            "PO" : {
+                "name" : "Poem"
+            },
+            "PR" : {
+                "name" : "Prayer"
+            },
+            "SL" : {
+                "name" : "Song lyrics"
+            }
+        }
+    },
+    "SP" : {
+        "name" : "Spoken",
+        "subcategories" : {
+            "FS" : {
+                "name" : "Formal Speech"
+            },
+            "IT" : {
+                "name" : "Interview",
+                "maps" : "NID"
+            },
+            "OS" : {
+                "name" : "Other spoken"
+            },
+            "TA" : {
+                "name" : "Transcript of video/audio"
+            },
+            "TV" : {
+                "name" : "TV/movie script",
+                "maps" : "AID"
+            }
+        }
+    },
+    "OTHER" : {
+         "name" : "no labels"
+    },
+    "MT" : {
+        "name" : "Machine translated/generated texts (FinCORE only)"
+    }
+}
