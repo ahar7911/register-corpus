@@ -1,6 +1,5 @@
 #! /bin/bash
 
-cd ..
 # create folder for storing original corpuses
 mkdir original-corpus
 cd original-corpus
@@ -39,5 +38,3 @@ for dir in */; do #
         fi
     fi
 done
-
-cd ../register-corpus

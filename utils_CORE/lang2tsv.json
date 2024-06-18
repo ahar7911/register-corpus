@@ -1,7 +1,6 @@
 {
-    "en" : "CORE-corpus/*.tsv.gz",
-    "fi" : "FinCORE_full/*.tsv",
-    "fr" : "Multilingual-register-corpora/data/FreCORE/*.tsv",
-    "sw" : "Multilingual-register-corpora/data/SweCORE/*.tsv",
-    "basedir" : "../original-corpus/"
+    "en" : "original-corpus/CORE-corpus/*.tsv.gz",
+    "fi" : "original-corpus/FinCORE_full/*.tsv",
+    "fr" : "original-corpus/Multilingual-register-corpora/data/FreCORE/*.tsv",
+    "sw" : "original-corpus/Multilingual-register-corpora/data/SweCORE/*.tsv"
 }

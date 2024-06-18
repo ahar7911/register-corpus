@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
     with open("utils_CORE/lang2tsv.json") as file:
         lang2tsv = json.load(file)
-    filepath = lang2tsv["basedir"] + lang2tsv[args.lang]
+    filepath = lang2tsv[args.lang]
     src_filepaths = glob.glob(filepath)
 
     if len(src_filepaths) == 0:
