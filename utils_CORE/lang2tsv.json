@@ -3,5 +3,5 @@
     "fi" : "FinCORE_full/*.tsv",
     "fr" : "Multilingual-register-corpora/data/FreCORE/*.tsv",
     "sw" : "Multilingual-register-corpora/data/SweCORE/*.tsv",
-    "basedir" : "../original/"
+    "basedir" : "../original-corpus/"
 }
