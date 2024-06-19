@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import sys
+import os
 import glob
 import gzip
 import csv
@@ -14,11 +15,13 @@ def openfile(filename : str, mode="r", encoding=None, newline=None):
 
 
 def convert_register(reg_str : str, core_mappings : dict, lang : str) -> str:
-    regs = reg_str.split(" ")
+    regs = [reg.upper() for reg in reg_str.split(" ")]
 
-    if lang == "fi": # FinCORE
-        if regs[0] == "MT": # remove machine translation tag if there
-            regs = regs[1:]
+    if "MT" in regs: # FinCORE and mutlilang CORE
+        regs.remove("MT")
+    if "" in regs: # multilang CORE formatting error
+        regs.remove("")
+    if lang == "fi": # FinCORE has subregisters first
         regs = regs[::-1]
     if len(regs) == 0 or regs[0] not in core_mappings: # empty register or bad string
         return None
@@ -36,7 +39,7 @@ def convert_register(reg_str : str, core_mappings : dict, lang : str) -> str:
     return None # register or subregister does not map
 
 
-def main(lang : str, src_filenames : list[str]):
+def main(lang : str, filepaths : list[str]):
     with openfile("utils_CORE/core_mappings.json") as file: # loads mappings as dict
         core_mappings = json.load(file)
     
@@ -49,8 +52,8 @@ def main(lang : str, src_filenames : list[str]):
         except OverflowError:
             maxInt = int(maxInt/10)
     
-    for filename in src_filenames:
-        with openfile(filename, "rt", "utf-8") as src_file:
+    for filepath in filepaths:
+        with openfile(filepath, "rt", "utf-8") as src_file:
             src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
             for row in src_reader:
                 reg_str, text = row[0], row[-1] # for some files, metadata in between
@@ -59,22 +62,30 @@ def main(lang : str, src_filenames : list[str]):
                     with openfile(f"corpus/{lang}.tsv", "at+", "utf-8", "") as dst_file:
                         dst_writer = csv.writer(dst_file, delimiter="\t")
                         dst_writer.writerow([new_reg, text])
-        print(f"{filename} completed standardization")
+        print(f"{filepath} completed standardization")
     
 
 if __name__ == "__main__":
+    with open("utils_CORE/lang2tsv.json") as file:
+        lang2tsv = json.load(file)
+    
     parser = ArgumentParser(prog="Standardize CORE",
                             description="Standardize CORE tsv files to new typology")
-    parser.add_argument("--lang", required=True, choices=["en", "fi", "fr", "sw"],
+    parser.add_argument("--lang", required=True, choices=lang2tsv.keys(),
                         help="language version of CORE to standardize")
     args = parser.parse_args()
 
-    with open("utils_CORE/lang2tsv.json") as file:
-        lang2tsv = json.load(file)
     filepath = lang2tsv[args.lang]
-    src_filepaths = glob.glob(filepath)
-
-    if len(src_filepaths) == 0:
-        raise Exception("No files found")
-
-    main(args.lang, src_filepaths)
+    
+    filepaths = glob.glob(filepath)
+    if len(filepaths) == 0:
+        raise Exception("No files found according to utils_CORE/lang2tsv.json")
+    
+    if args.lang != "multi":
+        main(args.lang, filepaths)
+    else:
+        for filepath in filepaths:
+            parts = filepath.split(os.sep)
+            lang = parts[-2]
+            if lang == parts[-1][:-4]: # where the name of .tsv file matches lang name
+                main(lang, [filepath])

@@ -1,6 +1,19 @@
 {
+    "ar" : "arabic",
+    "ca" : "catalan",
     "en" : "english",
+    "es" : "spanish",
+    "fa" : "farsi/persian",
     "fi" : "finnish",
     "fr" : "french",
-    "sw" : "swedish"
+    "hi" : "hindi",
+    "id" : "indonesian",
+    "jp" : "japanese",
+    "no" : "norwegian",
+    "pt" : "portuguese",
+    "ru" : "russian",
+    "sv" : "swedish",
+    "tr" : "turkish",
+    "ur" : "urdu",
+    "zh" : "chinese (simplified)"
 }

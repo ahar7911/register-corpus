@@ -1,6 +1,8 @@
 #! /bin/bash
 
-langs=("en" "fi" "fr" "sw")
+rm corpus/*
+
+langs=("en" "fi" "fr" "sv" "multi")
 
 for lang in "${langs[@]}"
 do

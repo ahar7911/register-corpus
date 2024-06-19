@@ -38,3 +38,11 @@ for dir in */; do #
         fi
     fi
 done
+
+# cleaning up multilang
+rm -r pytorch-registerlabeling/data/en
+rm -r pytorch-registerlabeling/data/fi
+rm -r pytorch-registerlabeling/data/fr
+rm -r pytorch-registerlabeling/data/sv
+rm -r pytorch-registerlabeling/data/multi
+mv pytorch-registerlabeling/data/ru/test.tsv pytorch-registerlabeling/data/ru/ru.tsv # oddly, no ru.tsv so we convert
