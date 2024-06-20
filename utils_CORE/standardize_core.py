@@ -57,11 +57,12 @@ def main(lang : str, filepaths : list[str]):
             src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
             for row in src_reader:
                 reg_str, text = row[0], row[-1] # for some files, metadata in between
-                new_reg = convert_register(reg_str, core_mappings, lang)
-                if new_reg is not None:
-                    with openfile(f"corpus/{lang}.tsv", "at+", "utf-8", "") as dst_file:
-                        dst_writer = csv.writer(dst_file, delimiter="\t")
-                        dst_writer.writerow([new_reg, text])
+                if text != "":
+                    new_reg = convert_register(reg_str, core_mappings, lang)
+                    if new_reg is not None:
+                        with openfile(f"corpus/{lang}.tsv", "at+", "utf-8", "") as dst_file:
+                            dst_writer = csv.writer(dst_file, delimiter="\t")
+                            dst_writer.writerow([new_reg, text])
         print(f"{filepath} completed standardization")
     
 
