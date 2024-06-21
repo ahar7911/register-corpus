@@ -88,5 +88,6 @@ if __name__ == "__main__":
         for filepath in filepaths:
             parts = filepath.split(os.sep)
             lang = parts[-2]
-            if lang == parts[-1][:-4]: # where the name of .tsv file matches lang name
+            filename, ext = os.path.splitext(parts[-1])
+            if lang == filename: # where the name of .tsv file matches lang name
                 main(lang, [filepath])
