@@ -14,12 +14,15 @@ echo "removed all pre-existing corpus data"
 langs=("en" "fi" "fr" "sv" "multi")
 for lang in "${langs[@]}"
 do
+    echo
     echo "standardizing CORE $lang"
     python utils_CORE/standardize_core.py --lang $lang
     echo "CORE $lang completed standardization"
 done
 echo "CORE completed standardization"
 
+echo
 python analyze_dist.py
 
+echo
 source train_test_split.sh
