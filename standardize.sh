@@ -22,7 +22,4 @@ echo "CORE completed standardization"
 
 python analyze_dist.py
 
-rm -f corpus/train/*
-rm -f corpus/test/*
-echo "cleared train and test folders"
-python train_test_split.py
+source train_test_split.sh

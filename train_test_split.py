@@ -20,7 +20,10 @@ for filepath in filepaths:
         test_size = 0.2
     else:
         test_size = 0.5
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=train_size, test_size=test_size, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=train_size, 
+                                                              test_size=test_size,
+                                                              random_state=42,
+                                                              stratify=y)
     print(f"split {len(X_train)} train, {len(X_test)} test")
 
     train_df = pd.DataFrame(zip(y_train, X_train))
@@ -29,5 +32,3 @@ for filepath in filepaths:
     test_df.to_csv(f"corpus/test/{lang}.tsv", sep="\t", header=False, index=False) 
 
     print(f"completed {lang} train test split\n")
-
-print("completed train test splits")
