@@ -12,18 +12,22 @@ for filepath in filepaths:
     X = dataset.iloc[:,1].tolist()
     y = dataset.iloc[:,0].tolist()
 
-    train_size = None
+    split_args = {"train_size":None, "test_size":None, "random_state":42, "stratify":y}
     if len(X) > 10000:
-        train_size = 8000
-        test_size = 2000
+        split_args["train_size"] = 8000
+        split_args["test_size"] = 2000
     elif len(X) > 500:
-        test_size = 0.2
+        split_args["test_size"] = 0.2
     else:
-        test_size = 0.5
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=train_size, 
-                                                              test_size=test_size,
-                                                              random_state=42,
-                                                              stratify=y)
+        split_args["test_size"] = 0.5
+    
+    try:
+        X_train, X_test, y_train, y_test = train_test_split(X, y, **split_args)
+    except ValueError as e:
+        split_args["stratify"] = None
+        print("original stratified split failed, retrying")
+        X_train, X_test, y_train, y_test = train_test_split(X, y, **split_args)
+
     print(f"split {len(X_train)} train, {len(X_test)} test")
 
     train_df = pd.DataFrame(zip(y_train, X_train))
