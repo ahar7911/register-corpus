@@ -60,7 +60,7 @@ def main(lang : str, filepaths : list[str]):
                 if text != "":
                     new_reg = convert_register(reg_str, core_mappings, lang)
                     if new_reg is not None:
-                        with openfile(f"corpus/{lang}.tsv", "at+", "utf-8", "") as dst_file:
+                        with openfile(f"corpus/{lang}.tsv", "a+", "utf-8", "") as dst_file:
                             dst_writer = csv.writer(dst_file, delimiter="\t")
                             dst_writer.writerow([new_reg, text])
         print(f"{filepath} completed standardization")
