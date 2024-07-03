@@ -1,9 +1,5 @@
 #! /bin/bash
 
-# create folder for storing original corpuses
-mkdir original-corpus
-cd original-corpus
-
 # CORE
 curl -L -o CORE_en.tar.gz https://api.github.com/repos/TurkuNLP/CORE-corpus/tarball/ 
 tar -xvf CORE_en.tar.gz
