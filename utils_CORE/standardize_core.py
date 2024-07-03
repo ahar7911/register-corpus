@@ -14,7 +14,7 @@ def openfile(filename : str, mode="r", encoding=None, newline=None):
         return open(filename, mode, encoding=encoding, newline=newline)
 
 
-def convert_register(reg_str : str, core_mappings : dict, lang : str) -> str:
+def convert_register(reg_str : str, mapping : dict, lang : str) -> str:
     regs = [reg.upper() for reg in reg_str.split(" ")]
 
     if "MT" in regs: # FinCORE and mutlilang CORE
@@ -23,15 +23,15 @@ def convert_register(reg_str : str, core_mappings : dict, lang : str) -> str:
         regs.remove("")
     if lang == "fi": # FinCORE has subregisters first
         regs = regs[::-1]
-    if len(regs) == 0 or regs[0] not in core_mappings: # empty register or bad string
+    if len(regs) == 0 or regs[0] not in mapping: # empty register or bad string
         return None
     
-    reg_map = core_mappings[regs[0]]
+    reg_map = mapping[regs[0]]
     if "maps" in reg_map: # register singly maps to a new register, along with all subregisters
         if len(regs) == 1 or all([r in reg_map["subcategories"] for r in regs[1:]]): # text has no subregister, or all subregisters are under register
             return reg_map["maps"]
     if len(regs) == 2: # now only possible mapping is from a subregister (must be register with single subregister)
-        if regs[1] in core_mappings or regs[1] not in reg_map["subcategories"]: # subregister is either actually a register (hybrid register) or incorrect subregister
+        if regs[1] in mapping or regs[1] not in reg_map["subcategories"]: # subregister is either actually a register (hybrid register) or incorrect subregister
             return None
         sub_reg_map = reg_map["subcategories"][regs[1]]
         if "maps" in sub_reg_map: # subregister maps
@@ -40,8 +40,8 @@ def convert_register(reg_str : str, core_mappings : dict, lang : str) -> str:
 
 
 def main(lang : str, filepaths : list[str]):
-    with openfile("utils_CORE/core_mappings.json") as file: # loads mappings as dict
-        core_mappings = json.load(file)
+    with openfile("mappings/core_abbv.json") as file: # loads mappings as dict
+        mapping = json.load(file)
     
     # https://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
     maxInt = sys.maxsize
@@ -58,9 +58,9 @@ def main(lang : str, filepaths : list[str]):
             for row in src_reader:
                 reg_str, text = row[0], row[-1] # for some files, metadata in between
                 if text != "":
-                    new_reg = convert_register(reg_str, core_mappings, lang)
+                    new_reg = convert_register(reg_str, mapping, lang)
                     if new_reg is not None:
-                        with openfile(f"corpus/{lang}.tsv", "at+", "utf-8", "") as dst_file:
+                        with openfile(f"corpus/{lang}.tsv", "a+", "utf-8", "") as dst_file:
                             dst_writer = csv.writer(dst_file, delimiter="\t")
                             dst_writer.writerow([new_reg, text])
         print(f"{filepath} completed standardization")
