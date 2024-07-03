@@ -1,0 +1,72 @@
+{
+    "actes juridiques" : {
+        "maps": "IN"
+    },
+    "autres genres" : {
+        "maps" : "unused"
+    },
+    "genres argumentatifs" : {
+        "maps" : "IP/OP",
+        "exceptions" : {
+            "dialogue" : "NID",
+            "épigramme" : "LY",
+            "oraison funèbre" : "IN"
+        }
+    },
+    "genres descriptifs et expositifs" : {
+        "maps" : "IN",
+        "exceptions" : {
+            "chronique" : "JN",
+            "discours" : "IP/OP",
+            "dissertation" : "IP/OP",
+            "guide" : "HI",
+            "recette" : "HI",
+            "tutoriel" : "HI"
+        }
+    },
+    "genres épistolaires/correspondances" : {
+        "maps": "NID"
+    },
+    "genres gnomiques" : {
+        "maps" : "unused",
+        "exceptions" : {
+            "almanach" : "IN",
+            "fable" : "RN",
+            "parabole" : "RN",
+            "pensée" : "IN"
+        }
+    },
+    "genres journalistiques ou médiatiques" : {
+        "maps": "JN"
+    },
+    "genres lexicographiques" : {
+        "maps": "IN"
+    },
+    "genres narratifs" : {
+        "maps" : "RN",
+        "exceptions" : {
+            "anecdote" : "NID",
+            "autre (biographie)" : "IN",
+            "notice nécrologique" : "IN",
+            "vie" : "IN",
+            "chronique" : "JN",
+            "blague" : "unused",
+            "histoire" : "JN",
+            "chantefable" : "LY",
+            "lai" : "LY",
+            "scénario" : "AID"
+        }
+    },
+    "genres poétiques" : {
+        "maps" : "LY",
+        "exceptions" : {
+            "fable" : "RN"
+        }
+    },
+    "genres théâtraux" : {
+        "maps" : "AID"
+    },
+    "paratextes" : {
+        "maps" : "IN"
+    }
+}
