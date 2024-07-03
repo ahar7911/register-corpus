@@ -67,7 +67,7 @@ def main(lang : str, filepaths : list[str]):
     
 
 if __name__ == "__main__":
-    with open("utils_CORE/lang2tsv.json") as file:
+    with open("utils_core/lang2tsv.json") as file:
         lang2tsv = json.load(file)
     
     parser = ArgumentParser(prog="Standardize CORE",
