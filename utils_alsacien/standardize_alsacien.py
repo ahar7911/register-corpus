@@ -36,6 +36,10 @@ def main():
                 #     core_reg = line.removeprefix("# webRegister: ")
                 elif line and not line.startswith("#"):
                     text_lines.append(line)
+    
+        if not text_lines:
+            print("ignoring blank text")
+            continue
         text = " ".join(text_lines)
 
         if not cahier_reg: # or not core_reg:
