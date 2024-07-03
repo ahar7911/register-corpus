@@ -11,15 +11,7 @@ echo "directories made, or already exist"
 rm -f corpus/*.tsv
 echo "removed all pre-existing corpus data"
 
-langs=("en" "fi" "fr" "sv" "multi")
-for lang in "${langs[@]}"
-do
-    echo
-    echo "standardizing CORE $lang"
-    python utils_CORE/standardize_core.py --lang $lang
-    echo "CORE $lang completed standardization"
-done
-echo "CORE completed standardization"
+source utils_core/standardize_core.sh
 
 echo
 python analyze_dist.py
