@@ -1,7 +1,7 @@
 {
-    "en" : "original-corpus/CORE-corpus/*.tsv.gz",
-    "fi" : "original-corpus/FinCORE_full/*.tsv",
-    "fr" : "original-corpus/Multilingual-register-corpora/data/FreCORE/*.tsv",
-    "sv" : "original-corpus/Multilingual-register-corpora/data/SweCORE/*.tsv",
-    "multi" : "original-corpus/pytorch-registerlabeling/data/*/*.tsv"
+    "en" : "corpus-original/CORE-corpus/*.tsv.gz",
+    "fi" : "corpus-original/FinCORE_full/*.tsv",
+    "fr" : "corpus-original/Multilingual-register-corpora/data/FreCORE/*.tsv",
+    "sv" : "corpus-original/Multilingual-register-corpora/data/SweCORE/*.tsv",
+    "multi" : "corpus-original/pytorch-registerlabeling/data/*/*.tsv"
 }
