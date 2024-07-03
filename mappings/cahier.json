@@ -13,7 +13,7 @@
             "oraison funèbre" : "IN"
         }
     },
-    "genres descriptifs et expositifs" : {
+    "genres descriptifs et/ou expositifs" : {
         "maps" : "IN",
         "exceptions" : {
             "chronique" : "JN",
@@ -24,7 +24,7 @@
             "tutoriel" : "HI"
         }
     },
-    "genres épistolaires/correspondances" : {
+    "genres épistolaires" : {
         "maps": "NID"
     },
     "genres gnomiques" : {
@@ -36,7 +36,7 @@
             "pensée" : "IN"
         }
     },
-    "genres journalistiques ou médiatiques" : {
+    "genres journalistiques et médiatiques" : {
         "maps": "JN"
     },
     "genres lexicographiques" : {

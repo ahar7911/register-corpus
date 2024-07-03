@@ -1,0 +1,34 @@
+{
+    "Informational description / Explanation" : {
+        "maps" : "IN"
+    },
+    "Narrative" : {
+        "maps" : "JN",
+        "exceptions" : {
+            "Other narrative" : "unused",
+            "Short story" : "RN"
+        }
+    },
+    "Informational persuasion" : {
+        "maps" : "IP/OP"
+    },
+    "Opinion" : {
+        "maps" : "IP/OP"
+    },
+    "Interactive discussion" : {
+        "maps" : "NID"
+    },
+    "How-to / Instructional" : {
+        "maps" : "HI"
+    },
+    "Lyrical" : {
+        "maps" : "LY"
+    },
+    "Spoken" : {
+        "maps" : "unused",
+        "exceptions" : {
+            "Interview" : "NID",
+            "TV / movie script" : "AID"
+        }
+    }
+}
