@@ -59,4 +59,6 @@ def main():
             text_writer.writerow([from_cahier, text])
 
 if __name__ == "__main__":
+    print("standardizing alsatian")
     main()
+    print("completed alsatian standardization")
