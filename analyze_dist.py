@@ -1,3 +1,4 @@
+import os
 import sys
 import glob
 import csv
@@ -16,7 +17,8 @@ while True: # decrease the maxInt value by factor 10 as long as the OverflowErro
 filepaths = glob.glob("corpus/*.tsv")
 
 for filepath in filepaths:
-    lang = filepath[7:-4]
+    _, tail = os.path.split(filepath)
+    lang, _ = os.path.splitext(tail)
     print(f"start analysis of {lang}")
     counter = Counter()
     with open(filepath, "rt", encoding="utf-8") as src_file:

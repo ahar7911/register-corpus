@@ -1,3 +1,4 @@
+import os
 import glob
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -5,7 +6,8 @@ from sklearn.model_selection import train_test_split
 filepaths = glob.glob("corpus/*.tsv")
 
 for filepath in filepaths:
-    lang = filepath[7:-4]
+    _, tail = os.path.split(filepath)
+    lang, _ = os.path.splitext(tail)
     print(f"starting {lang} train test split")
     dataset = pd.read_csv(filepath, sep='\t')
 
