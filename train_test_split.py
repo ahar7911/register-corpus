@@ -3,9 +3,17 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+corpus_dir = Path("corpus")
+
 def main():
-    corpus_dir = Path("corpus") # from running standardize.sh
-    filepaths = corpus_dir.glob("*.tsv")
+    if not corpus_dir.exists():
+        print("corpus directory does not exist, please run standardize.sh", file=sys.stderr)
+        sys.exit(1)
+
+    filepaths = list(corpus_dir.glob("*.tsv"))
+    if len(filepaths) == 0:
+        print("corpus directory is empty, please run standardize.sh", file=sys.stderr)
+        sys.exit(1)
 
     for filepath in filepaths:
         lang = filepath.stem
