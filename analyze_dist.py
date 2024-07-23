@@ -1,8 +1,7 @@
-import os
 import sys
-import glob
 import csv
 import json
+from pathlib import Path
 from collections import Counter
 
 # https://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
@@ -14,12 +13,13 @@ while True: # decrease the maxInt value by factor 10 as long as the OverflowErro
     except OverflowError:
         maxInt = int(maxInt/10)
 
-filepaths = glob.glob("corpus/*.tsv")
+corpus_dir = Path("corpus")
+filepaths = corpus_dir.glob("*.tsv")
 
 for filepath in filepaths:
-    _, tail = os.path.split(filepath)
-    lang, _ = os.path.splitext(tail)
+    lang = filepath.stem
     print(f"start analysis of {lang}")
+
     counter = Counter()
     with open(filepath, "rt", encoding="utf-8") as src_file:
         src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
@@ -30,11 +30,14 @@ for filepath in filepaths:
     counts = dict(counter)
     total = sum(counter.values())
     percentages = {k : v / total * 100 for k, v in counts.items()}
-    
     counts["total"] = total
-    output_filepath = f"summaries/{lang}.json"
 
-    with open(output_filepath, "w") as file:
-        json.dump({"counts" : counts, "percentages" : percentages}, file, indent=4)
+    summary_dir = Path("summaries")
+    if summary_dir.exists():
+        with open(summary_dir / f"{lang}.json", "w") as file:
+            json.dump({"counts" : counts, "percentages" : percentages}, file, indent=4)
+    else:
+        print("\nsummary folder does not exist, please run analyze_dist.sh instead")
+        sys.exit(1)
+    
     print(f"completed analysis of {lang}")
-print("completed all analyses")
