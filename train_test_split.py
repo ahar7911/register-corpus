@@ -3,9 +3,8 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-corpus_dir = Path("corpus")
-
 def main():
+    corpus_dir = Path("corpus")
     if not corpus_dir.exists():
         print("corpus directory does not exist, please run standardize.sh", file=sys.stderr)
         sys.exit(1)
@@ -41,14 +40,16 @@ def main():
 
         print(f"split {len(X_train)} train, {len(X_test)} test")
 
-        if (corpus_dir / "train").exists() and (corpus_dir / "test").exists():
-            train_df = pd.DataFrame(zip(y_train, X_train))
-            train_df.to_csv(corpus_dir / "train" / f"{lang}.tsv", sep="\t", header=False, index=False) 
-            test_df = pd.DataFrame(zip(y_test, X_test))
-            test_df.to_csv(corpus_dir / "test" / f"{lang}.tsv", sep="\t", header=False, index=False)
-        else:
-            print("\ntrain and test folders do not exist, please run train_test_split.sh instead", file=sys.stderr)
-            sys.exit(1)
+        train_dir = corpus_dir / "train"
+        test_dir = corpus_dir / "test"
+        if not train_dir.exists() or not test_dir.exists():
+            train_dir.mkdir(exist_ok=True)
+            test_dir.mkdir(exist_ok=True)
+
+        train_df = pd.DataFrame(zip(y_train, X_train))
+        train_df.to_csv(train_dir / f"{lang}.tsv", sep="\t", header=False, index=False) 
+        test_df = pd.DataFrame(zip(y_test, X_test))
+        test_df.to_csv(test_dir / f"{lang}.tsv", sep="\t", header=False, index=False)
 
         print(f"completed {lang} train test split\n")
 

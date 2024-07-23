@@ -2,11 +2,6 @@ import sys
 import csv
 import json
 from pathlib import Path
-from collections import Counter
-
-corpus_dir = Path("corpus")
-summary_dir = Path("summaries")
-reg_abbv_path = Path("info", "reg_abbv.json")
 
 def main():
     # https://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
@@ -18,12 +13,10 @@ def main():
         except OverflowError:
             maxInt = int(maxInt/10)
     
-    if reg_abbv_path.exists():
-        with open(reg_abbv_path) as reg_abbv_file:
-            reg_abbv2name = json.load(reg_abbv_file)
-    else:
-        print(f"register abbreviation json file not found at {reg_abbv_path}, please reload from original repo")
+    with open(Path("info/reg_abbv.json")) as reg_abbv_file:
+        reg_abbv2name = json.load(reg_abbv_file)
 
+    corpus_dir = Path("corpus")
     if not corpus_dir.exists():
         print("corpus directory does not exist, please run standardize.sh", file=sys.stderr)
         sys.exit(1)
@@ -48,12 +41,12 @@ def main():
         total = sum(counter.values())
         percentages = {k : v / total * 100 for k, v in counts.items()}
 
-        if summary_dir.exists():
-            with open(summary_dir / f"{lang}.json", "w") as file:
-                json.dump({"counts" : counts, "percentages" : percentages}, file, indent=4)
-        else:
-            print("\nsummary folder does not exist, please run analyze_dist.sh instead", file=sys.stderr)
-            sys.exit(1)
+        summary_dir = Path("summaries")
+        if not summary_dir.exists():
+            summary_dir.mkdir()
+        
+        with open(summary_dir / f"{lang}.json", "w") as file:
+            json.dump({"counts" : counts, "percentages" : percentages}, file, indent=4)
         
         print(f"completed analysis of {lang}")
 

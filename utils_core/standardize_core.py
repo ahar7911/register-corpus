@@ -7,8 +7,6 @@ import json
 
 from bs4 import BeautifulSoup
 
-lang2tsv_path = Path("utils_core", "lang2tsv.json")
-core_abbv_path = Path("mappings", "core_abbv.json")
 
 def openfile(path : Path, mode="r", encoding=None, newline=None):
     if path.suffix == ".gz":
@@ -43,12 +41,8 @@ def convert_register(reg_str : str, mapping : dict, lang : str) -> str:
 
 
 def main(lang : str, filepaths : list[Path]):
-    if core_abbv_path.exists():
-        with openfile(core_abbv_path) as core_abbv_file: # loads mappings as dict
-            mapping = json.load(core_abbv_file)
-    else:
-        print(f"no CORE abbreviation mapping found at {core_abbv_path}, please reload from github repository", file=sys.stderr)
-        sys.exit(1)
+    with openfile(Path("mappings/core_abbv.json")) as core_abbv_file: # loads mappings as dict
+        mapping = json.load(core_abbv_file)
     
     # https://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
     maxInt = sys.maxsize
@@ -74,7 +68,7 @@ def main(lang : str, filepaths : list[Path]):
 
                     new_reg = convert_register(reg_str, mapping, lang)
                     if new_reg is not None:                        
-                        output_path = Path("corpus", f"{lang}.tsv")
+                        output_path = Path(f"corpus/{lang}.tsv")
                         with openfile(output_path, "a+", encoding="utf-8", newline="") as out_file:
                             out_writer = csv.writer(out_file, delimiter="\t")
                             out_writer.writerow([new_reg, text])
@@ -82,12 +76,9 @@ def main(lang : str, filepaths : list[Path]):
     
 
 if __name__ == "__main__":
-    if lang2tsv_path.exists():
-        with open(lang2tsv_path) as lang2tsv_file:
-            lang2tsv = json.load(lang2tsv_file)
-    else:
-        print(f"CORE lang2tsv file does not exist at {lang2tsv_path}", file=sys.stderr)
-        sys.exit(1)
+    lang2tsv_path = Path("utils_core/lang2tsv.json")
+    with open(lang2tsv_path) as lang2tsv_file:
+        lang2tsv = json.load(lang2tsv_file)
     
     parser = ArgumentParser(prog="Standardize CORE",
                             description="Standardize CORE tsv files to new typology")
@@ -107,9 +98,9 @@ if __name__ == "__main__":
         print("you can also run utils_core/download_core.sh to use the default setup of utils_core/lang2tsv.json from the github repository", file=sys.stderr)
         sys.exit(1)
     
-    if not Path("corpus").exists():
-        print("\ncorpus folder does not exist, please run standardize.sh", file=sys.stderr)
-        sys.exit(1)
+    corpus_dir = Path("corpus")
+    if not corpus_dir.exists():
+        corpus_dir.mkdir()
     
     if args.lang == "multi":
         for filepath in filepaths:
