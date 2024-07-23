@@ -101,7 +101,7 @@
     },
     "IP" : {
         "name" : "Informational Persuasion",
-        "maps" : "IP/OP",
+        "maps" : "OP",
         "subcategories" : {
             "DS" : {
                 "name" : "Description with intent to sell"
@@ -123,7 +123,7 @@
     },
     "OP" : {
         "name" : "Opinion",
-        "maps" : "IP/OP",
+        "maps" : "OP",
         "subcategories" : {
             "AD" : {
                 "name" : "Advertisement"
@@ -150,7 +150,7 @@
     },
     "ID" : {
         "name" : "Interactive Discussion",
-        "maps" : "NID",
+        "maps" : "ND",
         "subcategories" : {
             "DF" : {
                 "name" : "Discussion forum"
@@ -213,7 +213,7 @@
             },
             "IT" : {
                 "name" : "Interview",
-                "maps" : "NID"
+                "maps" : "ND"
             },
             "OS" : {
                 "name" : "Other spoken"
@@ -223,7 +223,7 @@
             },
             "TV" : {
                 "name" : "TV/movie script",
-                "maps" : "AID"
+                "maps" : "AD"
             }
         }
     },

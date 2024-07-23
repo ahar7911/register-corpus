@@ -10,13 +10,13 @@
         }
     },
     "Informational persuasion" : {
-        "maps" : "IP/OP"
+        "maps" : "OP"
     },
     "Opinion" : {
-        "maps" : "IP/OP"
+        "maps" : "OP"
     },
     "Interactive discussion" : {
-        "maps" : "NID"
+        "maps" : "ND"
     },
     "How-to / Instructional" : {
         "maps" : "HI"
@@ -27,8 +27,8 @@
     "Spoken" : {
         "maps" : "unused",
         "exceptions" : {
-            "Interview" : "NID",
-            "TV / movie script" : "AID"
+            "Interview" : "ND",
+            "TV / movie script" : "AD"
         }
     }
 }

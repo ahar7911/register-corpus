@@ -6,9 +6,9 @@
         "maps" : "unused"
     },
     "genres argumentatifs" : {
-        "maps" : "IP/OP",
+        "maps" : "OP",
         "exceptions" : {
-            "dialogue" : "NID",
+            "dialogue" : "ND",
             "épigramme" : "LY",
             "oraison funèbre" : "IN"
         }
@@ -17,15 +17,15 @@
         "maps" : "IN",
         "exceptions" : {
             "chronique" : "JN",
-            "discours" : "IP/OP",
-            "dissertation" : "IP/OP",
+            "discours" : "OP",
+            "dissertation" : "OP",
             "guide" : "HI",
             "recette" : "HI",
             "tutoriel" : "HI"
         }
     },
     "genres épistolaires" : {
-        "maps": "NID"
+        "maps": "ND"
     },
     "genres gnomiques" : {
         "maps" : "unused",
@@ -45,7 +45,7 @@
     "genres narratifs" : {
         "maps" : "RN",
         "exceptions" : {
-            "anecdote" : "NID",
+            "anecdote" : "ND",
             "autre (biographie)" : "IN",
             "notice nécrologique" : "IN",
             "vie" : "IN",
@@ -54,7 +54,7 @@
             "histoire" : "JN",
             "chantefable" : "LY",
             "lai" : "LY",
-            "scénario" : "AID"
+            "scénario" : "AD"
         }
     },
     "genres poétiques" : {
@@ -64,7 +64,7 @@
         }
     },
     "genres théâtraux" : {
-        "maps" : "AID"
+        "maps" : "AD"
     },
     "paratextes" : {
         "maps" : "IN"
