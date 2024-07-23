@@ -96,11 +96,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     lang_dir = Path(lang2tsv["dir"][args.lang])
-    filepaths = list(lang_dir.glob(lang2tsv["glob"][args.lang]))
+    if not lang_dir.exists() or not lang_dir.is_dir() or not any(lang_dir.iterdir()):
+        print(f"current filepath to CORE {args.lang} corpus ({lang_dir}) does not exist, is not a directory, or is empty", file=sys.stderr)
+        print(f"edit the lang2tsv file at {lang2tsv_path} to the proper CORE {args.lang} corpus directory", file=sys.stderr)
+        sys.exit(1)
 
+    filepaths = list(lang_dir.glob(lang2tsv["glob"][args.lang]))
     if len(filepaths) == 0:
-        print(f"no files found according to CORE lang2tsv file at {lang2tsv_path}", file=sys.stderr)
-        print("you can run utils_core/download_core.sh and use the default setup of utils_core/lang2tsv.json from the github repository", file=sys.stderr)
+        print(f"no files found according to glob search from CORE lang2tsv file at {lang2tsv_path}", file=sys.stderr)
+        print("you can also run utils_core/download_core.sh to use the default setup of utils_core/lang2tsv.json from the github repository", file=sys.stderr)
         sys.exit(1)
     
     if not Path("corpus").exists():
