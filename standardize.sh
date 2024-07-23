@@ -14,7 +14,7 @@ source utils_core/standardize_core.sh
 
 # alsatian standardization
 echo
-python utils_alsacien/standardize_alsacien.py
+python utils_alsatian/standardize_alsatian.py
 echo "completed alsatian standardization"
 
 # corpus analysis
