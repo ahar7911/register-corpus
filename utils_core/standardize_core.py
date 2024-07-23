@@ -6,6 +6,8 @@ import gzip
 import csv
 import json
 
+from bs4 import BeautifulSoup
+
 
 def openfile(filename : str, mode="r", encoding=None, newline=None):
     if filename.endswith(".gz"):
@@ -57,7 +59,14 @@ def main(lang : str, filepaths : list[str]):
             src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
             for row in src_reader:
                 reg_str, text = row[0], row[-1] # for some files, metadata in between
+                if lang == "ru": # russian has metadata in the first couple columns instead
+                    reg_str = row[-2]
+                
                 if text != "":
+                    if lang == "ru": # russian text still contains html info
+                        soup = BeautifulSoup(text, "html.parser")
+                        text = ' '.join(soup.stripped_strings)
+
                     new_reg = convert_register(reg_str, mapping, lang)
                     if new_reg is not None:
                         with openfile(f"corpus/{lang}.tsv", "a+", "utf-8", "") as dst_file:
