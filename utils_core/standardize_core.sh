@@ -1,5 +1,7 @@
 #! /bin/bash
 
+source load_env.sh
+
 langs=("en" "fi" "fr" "sv" "multi")
 for lang in "${langs[@]}"; do
     echo
