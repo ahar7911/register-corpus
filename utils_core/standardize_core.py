@@ -8,7 +8,7 @@ import json
 from bs4 import BeautifulSoup
 
 lang2tsv_path = Path("utils_core", "lang2tsv.json")
-core_abbv_path = Path("mappings, core_abbv.json")
+core_abbv_path = Path("mappings", "core_abbv.json")
 
 def openfile(path : Path, mode="r", encoding=None, newline=None):
     if path.suffix == ".gz":
@@ -95,17 +95,21 @@ if __name__ == "__main__":
     
     parser = ArgumentParser(prog="Standardize CORE",
                             description="Standardize CORE tsv files to new typology")
-    parser.add_argument("--lang", required=True, choices=lang2tsv.keys(),
+    parser.add_argument("--lang", required=True, choices=lang2tsv["dir"].keys(),
                         help="language version of CORE to standardize")
     args = parser.parse_args()
 
     lang_dir = Path(lang2tsv["dir"][args.lang])
+    print(lang_dir)
     filepaths = lang_dir.glob(lang2tsv["glob"][args.lang])
 
-    if len(filepaths) == 0:
+    if len(list(filepaths)) == 0:
         print(f"no files found according to CORE lang2tsv file at {lang2tsv_path}")
         print("you can run utils_core/download_core.sh and use the default setup of utils_core/lang2tsv.json from the github repository")
         sys.exit(1)
+    
+    print(len(list(filepaths)) == 0)
+    print("hello")
     
     if args.lang == "multi":
         for filepath in filepaths:
@@ -114,3 +118,5 @@ if __name__ == "__main__":
                 main(lang, [filepath])
     else:
         main(args.lang, filepaths)
+    
+    print(f"completed CORE {args.lang} standardization")
