@@ -47,7 +47,7 @@ def main(lang : str, filepaths : list[Path]):
         with openfile(core_abbv_path) as core_abbv_file: # loads mappings as dict
             mapping = json.load(core_abbv_file)
     else:
-        print(f"no CORE abbreviation mapping found at {core_abbv_path}, please reload from github repository")
+        print(f"no CORE abbreviation mapping found at {core_abbv_path}, please reload from github repository", file=sys.stderr)
         sys.exit(1)
     
     # https://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
@@ -73,11 +73,7 @@ def main(lang : str, filepaths : list[Path]):
                         text = ' '.join(soup.stripped_strings)
 
                     new_reg = convert_register(reg_str, mapping, lang)
-                    if new_reg is not None:
-                        if not Path("corpus").exists():
-                            print("\ncorpus folder does not exist, please run standardize.sh")
-                            sys.exit(1)
-                        
+                    if new_reg is not None:                        
                         output_path = Path("corpus", f"{lang}.tsv")
                         with openfile(output_path, "a+", encoding="utf-8", newline="") as out_file:
                             out_writer = csv.writer(out_file, delimiter="\t")
@@ -90,7 +86,7 @@ if __name__ == "__main__":
         with open(lang2tsv_path) as lang2tsv_file:
             lang2tsv = json.load(lang2tsv_file)
     else:
-        print(f"CORE lang2tsv file does not exist at {lang2tsv_path}")
+        print(f"CORE lang2tsv file does not exist at {lang2tsv_path}", file=sys.stderr)
         sys.exit(1)
     
     parser = ArgumentParser(prog="Standardize CORE",
@@ -100,16 +96,16 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     lang_dir = Path(lang2tsv["dir"][args.lang])
-    print(lang_dir)
-    filepaths = lang_dir.glob(lang2tsv["glob"][args.lang])
+    filepaths = list(lang_dir.glob(lang2tsv["glob"][args.lang]))
 
-    if len(list(filepaths)) == 0:
-        print(f"no files found according to CORE lang2tsv file at {lang2tsv_path}")
-        print("you can run utils_core/download_core.sh and use the default setup of utils_core/lang2tsv.json from the github repository")
+    if len(filepaths) == 0:
+        print(f"no files found according to CORE lang2tsv file at {lang2tsv_path}", file=sys.stderr)
+        print("you can run utils_core/download_core.sh and use the default setup of utils_core/lang2tsv.json from the github repository", file=sys.stderr)
         sys.exit(1)
     
-    print(len(list(filepaths)) == 0)
-    print("hello")
+    if not Path("corpus").exists():
+        print("\ncorpus folder does not exist, please run standardize.sh", file=sys.stderr)
+        sys.exit(1)
     
     if args.lang == "multi":
         for filepath in filepaths:
