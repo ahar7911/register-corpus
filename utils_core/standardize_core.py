@@ -1,19 +1,20 @@
 from argparse import ArgumentParser
 import sys
-import os
-import glob
+from pathlib import Path
 import gzip
 import csv
 import json
 
 from bs4 import BeautifulSoup
 
+lang2tsv_path = Path("utils_core", "lang2tsv.json")
+core_abbv_path = Path("mappings, core_abbv.json")
 
-def openfile(filename : str, mode="r", encoding=None, newline=None):
-    if filename.endswith(".gz"):
-        return gzip.open(filename, mode, encoding=encoding, newline=newline) 
+def openfile(path : Path, mode="r", encoding=None, newline=None):
+    if path.suffix == ".gz":
+        return gzip.open(path, mode, encoding=encoding, newline=newline) 
     else:
-        return open(filename, mode, encoding=encoding, newline=newline)
+        return open(path, mode, encoding=encoding, newline=newline)
 
 
 def convert_register(reg_str : str, mapping : dict, lang : str) -> str:
@@ -41,9 +42,13 @@ def convert_register(reg_str : str, mapping : dict, lang : str) -> str:
     return None # register or subregister does not map
 
 
-def main(lang : str, filepaths : list[str]):
-    with openfile("mappings/core_abbv.json") as file: # loads mappings as dict
-        mapping = json.load(file)
+def main(lang : str, filepaths : list[Path]):
+    if core_abbv_path.exists():
+        with openfile(core_abbv_path) as core_abbv_file: # loads mappings as dict
+            mapping = json.load(core_abbv_file)
+    else:
+        print(f"no CORE abbreviation mapping found at {core_abbv_path}, please reload from github repository")
+        sys.exit(1)
     
     # https://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072
     maxInt = sys.maxsize
@@ -55,7 +60,7 @@ def main(lang : str, filepaths : list[str]):
             maxInt = int(maxInt/10)
     
     for filepath in filepaths:
-        with openfile(filepath, "rt", "utf-8") as src_file:
+        with openfile(filepath, "rt", encoding="utf-8") as src_file:
             src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
             for row in src_reader:
                 reg_str, text = row[0], row[-1] # for some files, metadata in between
@@ -69,15 +74,24 @@ def main(lang : str, filepaths : list[str]):
 
                     new_reg = convert_register(reg_str, mapping, lang)
                     if new_reg is not None:
-                        with openfile(f"corpus/{lang}.tsv", "a+", "utf-8", "") as dst_file:
-                            dst_writer = csv.writer(dst_file, delimiter="\t")
-                            dst_writer.writerow([new_reg, text])
+                        if not Path("corpus").exists():
+                            print("\ncorpus folder does not exist, please run standardize.sh")
+                            sys.exit(1)
+                        
+                        output_path = Path("corpus", f"{lang}.tsv")
+                        with openfile(output_path, "a+", encoding="utf-8", newline="") as out_file:
+                            out_writer = csv.writer(out_file, delimiter="\t")
+                            out_writer.writerow([new_reg, text])
         print(f"{filepath} completed standardization")
     
 
 if __name__ == "__main__":
-    with open("utils_core/lang2tsv.json") as file:
-        lang2tsv = json.load(file)
+    if lang2tsv_path.exists():
+        with open(lang2tsv_path) as lang2tsv_file:
+            lang2tsv = json.load(lang2tsv_file)
+    else:
+        print(f"CORE lang2tsv file does not exist at {lang2tsv_path}")
+        sys.exit(1)
     
     parser = ArgumentParser(prog="Standardize CORE",
                             description="Standardize CORE tsv files to new typology")
@@ -85,18 +99,18 @@ if __name__ == "__main__":
                         help="language version of CORE to standardize")
     args = parser.parse_args()
 
-    filepath = lang2tsv[args.lang]
-    
-    filepaths = glob.glob(filepath)
+    lang_dir = Path(lang2tsv["dir"][args.lang])
+    filepaths = lang_dir.glob(lang2tsv["glob"][args.lang])
+
     if len(filepaths) == 0:
-        raise Exception("No files found according to utils_CORE/lang2tsv.json")
+        print(f"no files found according to CORE lang2tsv file at {lang2tsv_path}")
+        print("you can run utils_core/download_core.sh and use the default setup of utils_core/lang2tsv.json from the github repository")
+        sys.exit(1)
     
-    if args.lang != "multi":
-        main(args.lang, filepaths)
-    else:
+    if args.lang == "multi":
         for filepath in filepaths:
-            parts = filepath.split(os.sep)
-            lang = parts[-2]
-            filename, ext = os.path.splitext(parts[-1])
-            if lang == filename: # where the name of .tsv file matches lang name
+            lang = filepath.parts[-2]
+            if lang == filepath.stem: # name of .tsv file matches lang name (not train.tsv or test.tsv)
                 main(lang, [filepath])
+    else:
+        main(args.lang, filepaths)
