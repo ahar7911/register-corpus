@@ -10,7 +10,7 @@ output_path = Path("corpus", "al.tsv")
 
 def convert_register(mapping : dict, reg : str, subreg : str) -> str:
     if reg not in mapping:
-        print(f"invalid CORE or CAHIER register '{reg}'")
+        print(f"invalid CORE or CAHIER register '{reg}'", file=sys.stderr)
         sys.exit(1)
     
     map_data = mapping[reg]
@@ -24,14 +24,14 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
     #     with open(core_path) as core_file:
     #         core_mapping = json.load(core_file)
     # else:
-    #     print(f"no CORE mapping found at {core_path}, please reload from github repository")
+    #     print(f"no CORE mapping found at {core_path}, please reload from github repository", file=sys.stderr)
     #     sys.exit(1)
 
     if cahier_path.exists():
         with open(cahier_path) as cahier_file:
             cahier_mapping = json.load(cahier_file)
     else:
-        print(f"no CAHIER mapping found at {cahier_path}, please reload from github repository")
+        print(f"no CAHIER mapping found at {cahier_path}, please reload from github repository", file=sys.stderr)
         sys.exit(1)
 
     text_paths = corpus_path.glob("*/*.txt")
@@ -56,8 +56,8 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
         text = " ".join(text_lines)
 
         if not cahier_reg: # or not core_reg:
-            print("\nno CAHIER register metadata found for alsatian text file") # no CORE web register and/or 
-            print(f"first 50 characters of text: {text[:50]}")
+            print("\nno CAHIER register metadata found for alsatian text file", file=sys.stderr) # no CORE web register and/or 
+            print(f"first 50 characters of text: {text[:50]}", file=sys.stderr)
             sys.exit(1)
         
         cahier_regs = cahier_reg.split(".")
@@ -71,7 +71,7 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
         #         print(f"Originally {core_reg} and {cahier_reg}")
         
         if not Path("corpus").exists():
-            print("\ncorpus folder does not exist, please run standardize.sh")
+            print("\ncorpus folder does not exist, please run standardize.sh", file=sys.stderr)
             sys.exit(1)
 
         with open(output_path, "a+", encoding="utf-8", newline="") as corpus_file:
@@ -82,8 +82,8 @@ if __name__ == "__main__":
     print("standardizing alsatian")
 
     if not corpus_path.exists() or not corpus_path.is_dir() or not any(corpus_path.iterdir()):
-        print(f"current filepath to alsatian corpus ({corpus_path}) does not exist, is not a directory, or is empty")
-        print("edit the corpus_path variable in utils_alsatian/standardize_alsatian.py to the proper alsatian corpus directory")
+        print(f"current filepath to alsatian corpus ({corpus_path}) does not exist, is not a directory, or is empty", file=sys.stderr)
+        print("edit the corpus_path variable in utils_alsatian/standardize_alsatian.py to the proper alsatian corpus directory", file=sys.stderr)
         sys.exit(1)
 
     main()

@@ -39,7 +39,7 @@ def main():
             test_df = pd.DataFrame(zip(y_test, X_test))
             test_df.to_csv(corpus_dir / "test" / f"{lang}.tsv", sep="\t", header=False, index=False)
         else:
-            print("\ntrain and test folders do not exist, please run train_test_split.sh instead")
+            print("\ntrain and test folders do not exist, please run train_test_split.sh instead", file=sys.stderr)
             sys.exit(1)
 
         print(f"completed {lang} train test split\n")

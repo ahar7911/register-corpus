@@ -38,7 +38,7 @@ def main():
             with open(summary_dir / f"{lang}.json", "w") as file:
                 json.dump({"counts" : counts, "percentages" : percentages}, file, indent=4)
         else:
-            print("\nsummary folder does not exist, please run analyze_dist.sh instead")
+            print("\nsummary folder does not exist, please run analyze_dist.sh instead", file=sys.stderr)
             sys.exit(1)
         
         print(f"completed analysis of {lang}")
