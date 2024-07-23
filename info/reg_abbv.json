@@ -1,0 +1,10 @@
+{
+    "IN" : "Informational Description/Explanation",
+    "OP" : "Informational Persuasion/Opinion",
+    "RN" : "Recreational Narrative",
+    "JN" : "Journalistic Narrative",
+    "HI" : "How-to/Instructional",
+    "LY" : "Lyrical",
+    "ND" : "Natural Interactive Discussion",
+    "AD" : "Artificial Interactive Discussion"
+}
