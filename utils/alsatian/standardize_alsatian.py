@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     if not alsatian_path.exists() or not alsatian_path.is_dir() or not any(alsatian_path.iterdir()):
         print(f"current filepath to alsatian corpus ({alsatian_path}) does not exist, is not a directory, or is empty", file=sys.stderr)
-        print("edit the corpus_path variable in utils_alsatian/standardize_alsatian.py to the proper alsatian corpus directory", file=sys.stderr)
+        print("edit the corpus_path variable in utils/alsatian/standardize_alsatian.py to the proper alsatian corpus directory", file=sys.stderr)
         sys.exit(1)
 
     main()

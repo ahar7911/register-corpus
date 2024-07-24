@@ -10,10 +10,10 @@ echo "created directories and/or removed all pre-existing corpus data"
 echo "START STANDARDIZATION"
 
 # CORE standardization
-source utils_core/standardize_core.sh
+source utils/core/standardize_core.sh
 # alsatian standardization
 echo
-python utils_alsatian/standardize_alsatian.py
+python utils/alsatian/standardize_alsatian.py
 
 echo "END STANDARDIZATION"
 

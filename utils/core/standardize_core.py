@@ -76,7 +76,7 @@ def main(lang : str, filepaths : list[Path]):
     
 
 if __name__ == "__main__":
-    lang2tsv_path = Path("utils_core/lang2tsv.json")
+    lang2tsv_path = Path("utils/core/lang2tsv.json")
     with open(lang2tsv_path) as lang2tsv_file:
         lang2tsv = json.load(lang2tsv_file)
     
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     filepaths = list(lang_dir.glob(lang2tsv["glob"][args.lang]))
     if len(filepaths) == 0:
         print(f"no files found according to glob search from CORE lang2tsv file at {lang2tsv_path}", file=sys.stderr)
-        print("you can also run utils_core/download_core.sh to use the default setup of utils_core/lang2tsv.json from the github repository", file=sys.stderr)
+        print("you can also run utils/core/download_core.sh to use the default setup of utils/core/lang2tsv.json from the github repository", file=sys.stderr)
         sys.exit(1)
     
     corpus_dir = Path("corpus")
