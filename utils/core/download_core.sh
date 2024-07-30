@@ -1,13 +1,15 @@
 #! /bin/bash
 
+mkdir -p ZIPS
+
 # CORE
-curl -L -o CORE_en.tar.gz https://api.github.com/repos/TurkuNLP/CORE-corpus/tarball/ 
-tar -xvf CORE_en.tar.gz
+curl -L -o ZIPS/CORE_en.tar.gz https://api.github.com/repos/TurkuNLP/CORE-corpus/tarball/ 
+tar -xvf ZIPS/CORE_en.tar.gz
 echo "CORE download and extraction complete"
 
 #FreCORE and SweCORE
 curl -L -o CORE_fr_sw.tar.gz https://api.github.com/repos/TurkuNLP/Multilingual-register-corpora/tarball
-tar -xvf CORE_fr_sw.tar.gz
+tar -xvf ZIPS/CORE_fr_sw.tar.gz
 echo "FreCORE/SweCORE download and extraction complete"
 
 # FinCORE
@@ -22,7 +24,7 @@ echo "FinCORE download and extraction complete"
 
 # multilang CORE
 curl -L -o CORE_multi.tar.gz https://api.github.com/repos/TurkuNLP/pytorch-registerlabeling/tarball/
-tar -xvf CORE_multi.tar.gz --wildcards "*/data"
+tar -xvf ZIPS/CORE_multi.tar.gz --wildcards "*/data"
 echo "multilang CORE download and extraction complete"
 
 # renaming Github directories, removes "OWNER-" (here "TurkuNLP-"") and "-#######" (number of the commit ref)
