@@ -6,13 +6,13 @@ from sklearn.model_selection import train_test_split
 
 def main(train_size : int = None):
     corpus_dir = Path("corpus")
-    if not corpus_dir.exists():
-        print("corpus directory does not exist, please run standardize.sh", file=sys.stderr)
+    if not corpus_dir.exists() or not corpus_dir.is_dir():
+        print("corpus directory does not exist or is not a directory, please run standardize.sh", file=sys.stderr)
         sys.exit(1)
 
     filepaths = list(corpus_dir.glob("*.tsv"))
     if len(filepaths) == 0:
-        print("corpus directory is empty, please run standardize.sh", file=sys.stderr)
+        print("corpus directory has no tsv files, please run standardize.sh", file=sys.stderr)
         sys.exit(1)
 
     for filepath in filepaths:
