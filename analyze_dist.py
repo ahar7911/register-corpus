@@ -30,7 +30,7 @@ def main():
         lang = filepath.stem
         print(f"start analysis of {lang}")
 
-        counter = {k : 0 for k, _ in reg_abbv2name.items()}
+        counter = {k : 0 for k in reg_abbv2name.keys()}
         with open(filepath, "rt", encoding="utf-8") as src_file:
             src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
             for row in src_reader:
