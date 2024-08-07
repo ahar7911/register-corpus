@@ -10,5 +10,5 @@ mkdir -p innsbruck
 echo "extracting innsbruck zip file"
 unzip ZIPS/innsbruck.zip -d innsbruck
 echo "extracting GermInnC.zip file"
-unzip -q innsbruck/GermInnC.zip -d innsbruck
+unzip innsbruck/GermInnC.zip -d innsbruck
 echo "extraction complete"
