@@ -8,7 +8,7 @@ tar -xvf ZIPS/CORE_en.tar.gz
 echo "CORE download and extraction complete"
 
 #FreCORE and SweCORE
-curl -L -o CORE_fr_sw.tar.gz https://api.github.com/repos/TurkuNLP/Multilingual-register-corpora/tarball
+curl -L -o ZIPS/CORE_fr_sw.tar.gz https://api.github.com/repos/TurkuNLP/Multilingual-register-corpora/tarball
 tar -xvf ZIPS/CORE_fr_sw.tar.gz
 echo "FreCORE/SweCORE download and extraction complete"
 
@@ -23,7 +23,7 @@ cd ..
 echo "FinCORE download and extraction complete"
 
 # multilang CORE
-curl -L -o CORE_multi.tar.gz https://api.github.com/repos/TurkuNLP/pytorch-registerlabeling/tarball/
+curl -L -o ZIPS/CORE_multi.tar.gz https://api.github.com/repos/TurkuNLP/pytorch-registerlabeling/tarball/
 tar -xvf ZIPS/CORE_multi.tar.gz --wildcards "*/data"
 echo "multilang CORE download and extraction complete"
 
