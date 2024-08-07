@@ -36,6 +36,7 @@ curl -L -o ZIPS/CORE_multi.tar.gz https://api.github.com/repos/TurkuNLP/pytorch-
 echo "start multilang CORE extraction"
 tar -xvf ZIPS/CORE_multi.tar.gz --wildcards "*/data"
 echo "multilang CORE download and extraction complete"
+echo
 
 echo "renaming folders to remove Github info"
 # renaming Github directories, removes "OWNER-" (here "TurkuNLP-"") and "-#######" (number of the commit ref)
