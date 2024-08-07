@@ -4,7 +4,7 @@ source load_env.sh
 
 rm -rf corpus
 mkdir corpus
-echo "created directories and/or removed all pre-existing corpus data"
+echo "created corpus directory, removed all pre-existing corpus data if present"
 
 # STANDARDIZATION
 echo "START STANDARDIZATION"
@@ -24,6 +24,7 @@ echo "END STANDARDIZATION"
 echo
 echo "START CORPUS ANALYSIS"
 rm -rf summaries
+echo "removed summaries folder, if existed"
 python analyze_dist.py
 echo "END CORPUS ANALYSIS"
 
@@ -32,6 +33,7 @@ echo
 echo "START TRAIN TEST SPLIT"
 rm -rf corpus/train
 rm -rf corpus/test
+echo "removed train and test folders in corpus folder, if existed"
 python train_test_split.py
 echo "END TRAIN TEST SPLIT"
 
