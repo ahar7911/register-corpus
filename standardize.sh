@@ -2,7 +2,7 @@
 
 source load_env.sh
 
-rm -f -r corpus
+rm -rf corpus
 mkdir corpus
 echo "created directories and/or removed all pre-existing corpus data"
 
@@ -23,14 +23,19 @@ echo "END STANDARDIZATION"
 # corpus analysis
 echo
 echo "START CORPUS ANALYSIS"
-rm -r -f summaries
+rm -rf summaries
 python analyze_dist.py
 echo "END CORPUS ANALYSIS"
 
 # train test split
 echo
 echo "START TRAIN TEST SPLIT"
-rm -r -f corpus/train
-rm -r -f corpus/test
+rm -rf corpus/train
+rm -rf corpus/test
 python train_test_split.py
 echo "END TRAIN TEST SPLIT"
+
+# create distributed register corpus
+echo
+echo "START CREATION OF DISTRIBUTED REGISTER CORPUS"
+python distr_corpus.py
