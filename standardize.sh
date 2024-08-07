@@ -14,6 +14,9 @@ source utils/core/standardize_core.sh
 # alsatian standardization
 echo
 python utils/alsatian/standardize_alsatian.py
+# German Innsbruck standardization
+echo
+python utils/innsbruck/standardize_innsbruck.py
 
 echo "END STANDARDIZATION"
 
