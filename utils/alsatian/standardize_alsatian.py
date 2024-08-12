@@ -22,6 +22,13 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
 
     with open(Path("mappings/cahier.json")) as cahier_file:
         cahier_mapping = json.load(cahier_file)
+    
+    corpus_dir = Path("corpus")
+    if not corpus_dir.exists():
+        corpus_dir.mkdir()
+    
+    al_tsv_path = corpus_dir / "al.tsv"
+    al_tsv_path.unlink(missing_ok=True) # remove corpus/al.tsv if already exists
 
     text_paths = alsatian_path.glob("*/*.txt")
     
@@ -58,12 +65,8 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
         #     if from_core != from_cahier:
         #         print(f"Classified as {from_core} and {from_cahier}")
         #         print(f"Originally {core_reg} and {cahier_reg}")
-        
-        corpus_dir = Path("corpus")
-        if not corpus_dir.exists():
-            corpus_dir.mkdir()
 
-        with open(corpus_dir / "al.tsv", "a+", encoding="utf-8", newline="") as corpus_file:
+        with open(al_tsv_path, "a+", encoding="utf-8", newline="") as corpus_file:
             text_writer = csv.writer(corpus_file, delimiter="\t")
             text_writer.writerow([from_cahier, text])
 
@@ -72,7 +75,7 @@ if __name__ == "__main__":
 
     if not alsatian_path.exists() or not alsatian_path.is_dir() or not any(alsatian_path.iterdir()):
         print(f"current filepath to alsatian corpus ({alsatian_path}) does not exist, is not a directory, or is empty", file=sys.stderr)
-        print("edit the corpus_path variable in utils/alsatian/standardize_alsatian.py to the proper alsatian corpus directory", file=sys.stderr)
+        print("edit the alsatian_path variable in utils/alsatian/standardize_alsatian.py to the proper alsatian corpus directory", file=sys.stderr)
         sys.exit(1)
 
     main()

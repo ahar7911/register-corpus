@@ -53,6 +53,9 @@ def main(lang : str, filepaths : list[Path]):
         except OverflowError:
             maxInt = int(maxInt/10)
     
+    output_path = Path(f"corpus/{lang}.tsv")
+    output_path.unlink(missing_ok=True) # remove tsv file if already exists
+    
     for filepath in filepaths:
         with openfile(filepath, "rt", encoding="utf-8") as src_file:
             src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
@@ -68,7 +71,6 @@ def main(lang : str, filepaths : list[Path]):
 
                     new_reg = convert_register(reg_str, mapping, lang)
                     if new_reg is not None:                        
-                        output_path = Path(f"corpus/{lang}.tsv")
                         with openfile(output_path, "a+", encoding="utf-8", newline="") as out_file:
                             out_writer = csv.writer(out_file, delimiter="\t")
                             out_writer.writerow([new_reg, text])

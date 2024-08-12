@@ -8,6 +8,13 @@ innsbruck_path = Path("corpus-original/innsbruck/GermInnC/1901-1950")
 def main():
     with open(Path("mappings/innsbruck.json")) as mapping_file:
         mapping = json.load(mapping_file)
+    
+    corpus_dir = Path("corpus")
+    if not corpus_dir.exists():
+        corpus_dir.mkdir()
+    
+    de_tsv_path = corpus_dir / "de.tsv"
+    de_tsv_path.unlink(missing_ok=True) # removes corpus/de.tsv if already exists
 
     # remove empty lines, combine it all into one string (no new lines?)
     for text_path in innsbruck_path.iterdir():
@@ -29,11 +36,7 @@ def main():
 
         text = " ".join(text_lines)
 
-        corpus_dir = Path("corpus")
-        if not corpus_dir.exists():
-            corpus_dir.mkdir()
-
-        with open(corpus_dir / "de.tsv", "a+", encoding="utf-8", newline="") as corpus_file:
+        with open(de_tsv_path, encoding="utf-8", newline="") as corpus_file:
             text_writer = csv.writer(corpus_file, delimiter="\t")
             text_writer.writerow([new_reg, text])
 
