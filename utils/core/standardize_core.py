@@ -29,12 +29,12 @@ def convert_register(reg_str : str, mapping : dict, lang : str) -> str:
     
     reg_map = mapping[regs[0]]
     if "maps" in reg_map: # register singly maps to a new register, along with all subregisters
-        if len(regs) == 1 or all([r in reg_map["subcategories"] for r in regs[1:]]): # text has no subregister, or all subregisters are under register
+        if len(regs) == 1 or all([r in reg_map["subregisters"] for r in regs[1:]]): # text has no subregister, or all subregisters are under register
             return reg_map["maps"]
     if len(regs) == 2: # now only possible mapping is from a subregister (must be register with single subregister)
-        if regs[1] in mapping or regs[1] not in reg_map["subcategories"]: # subregister is either actually a register (hybrid register) or incorrect subregister
+        if regs[1] in mapping or regs[1] not in reg_map["subregisters"]: # subregister is either actually a register (hybrid register) or incorrect subregister
             return None
-        sub_reg_map = reg_map["subcategories"][regs[1]]
+        sub_reg_map = reg_map["subregisters"][regs[1]]
         if "maps" in sub_reg_map: # subregister maps
             return sub_reg_map["maps"]
     return None # register or subregister does not map

@@ -2,7 +2,7 @@
     "IN" : {
         "name" : "Informational Description/Explanation",
         "maps" : "IN",
-        "subcategories" : {
+        "subregisters" : {
             "CM" : {
                 "name" : "Course materials"
             },
@@ -47,7 +47,7 @@
     },
     "NA" : {
         "name" : "Narrative",
-        "subcategories" : {
+        "subregisters" : {
             "HA" : {
                 "name" : "Historical article",
                 "maps" : "JN"
@@ -102,7 +102,7 @@
     "IP" : {
         "name" : "Informational Persuasion",
         "maps" : "OP",
-        "subcategories" : {
+        "subregisters" : {
             "DS" : {
                 "name" : "Description with intent to sell"
             },
@@ -124,7 +124,7 @@
     "OP" : {
         "name" : "Opinion",
         "maps" : "OP",
-        "subcategories" : {
+        "subregisters" : {
             "AD" : {
                 "name" : "Advertisement"
             },
@@ -151,7 +151,7 @@
     "ID" : {
         "name" : "Interactive Discussion",
         "maps" : "ND",
-        "subcategories" : {
+        "subregisters" : {
             "DF" : {
                 "name" : "Discussion forum"
             },
@@ -169,7 +169,7 @@
     "HI" : {
         "name" : "How-To/Instructional",
         "maps" : "HI",
-        "subcategories" : {
+        "subregisters" : {
             "FH" : {
                 "name" : "FAQ about how-to"
             },
@@ -190,7 +190,7 @@
     "LY" : {
         "name" : "Lyrical",
         "maps" : "LY",
-        "subcategories" : {
+        "subregisters" : {
             "OL" : {
                 "name" : "Other lyrical"
             },
@@ -207,7 +207,7 @@
     },
     "SP" : {
         "name" : "Spoken",
-        "subcategories" : {
+        "subregisters" : {
             "FS" : {
                 "name" : "Formal Speech"
             },
