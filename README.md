@@ -1,4 +1,5 @@
-# Multilingual Corpus for Classification of Textual Registers (Corpus multilingue pour la classification des registres de textes)
+# Multilingual Corpus for Classification of Textual Registers
+# (Corpus multilingue pour la classification des registres de textes)
 
 This repository contains scripts to download, convert the register classification of, and analyze corpora used for the multilingual classification of textual registers.
 
