@@ -12,6 +12,8 @@ Register-labeled corpora are converted to the registers specified in `info/reg_a
 
 The `mappings` folder (which contains the mappings between the corpora's original registers and the new registers in JSON files) also contains a sankey diagram in `mappings/sankey/sankey.html` that visualizes the relationship between the CORE registers used to label the CORE corpora and the CAHIER registers (used to label the Alsatian text corpus) and the new registers.
 
+A modifiable script `load_env.sh` is used to load Python. Each script runs this when running Python scripts. Feel free to customize to your own environment, or to make the file empty is it is not needed.
+
 More information about the three corpora used here and the code for their conversion (provided here in `utils` folder) is provided below:
 
 ## CORE
