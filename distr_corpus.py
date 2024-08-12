@@ -96,7 +96,7 @@ def main(langs : list[str], max_size : int, cutoff : int) -> None:
         filepaths.remove(distr_train_path)
         print("distr.tsv included in original filepaths, now removed")
     
-    print(f"languages used in making distr corpus: {', '.join([filepath.stem for filepath in filepaths])}")
+    print(f"languages used in making distr corpus: {', '.join(sorted([filepath.stem for filepath in filepaths]))}")
     
     reg2texts = get_distr_reg2texts(filepaths, max_size, cutoff)
     distr_regs = []
