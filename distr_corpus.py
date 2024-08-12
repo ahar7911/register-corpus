@@ -54,13 +54,12 @@ def get_distr_reg2texts(filepaths : list[Path],
         reg2len[reg] = sum([len(texts) for texts in text_lists])
     if max_size is None:
         max_size = min([num for num in reg2len.values() if num > cutoff])
-    print(f"number of texts found per register:\n{'\n'.join([f'{reg}: {num}' for reg, num in reg2len.items()])}")
+    print(f"number of texts found per register:\n" + "\n".join([f"{reg}: {num}" for reg, num in reg2len.items()]))
 
     for reg, text_lists in reg2texts.items():
         reg2texts[reg] = combine_lists(text_lists, max_size)
     
-    print("number of texts put in new distr corpus per register:")
-    print("\n".join([f"{reg}: {len(texts)}" for reg, texts in reg2texts.items()]))
+    print("number of texts put in new distr corpus per register:" + "\n".join([f"{reg}: {len(texts)}" for reg, texts in reg2texts.items()]))
     return reg2texts
 
 
