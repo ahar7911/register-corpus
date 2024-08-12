@@ -33,7 +33,7 @@ echo
 echo "START TRAIN TEST SPLIT"
 rm -rf corpus/train
 rm -rf corpus/test
-echo "removed train and test folders in corpus folder, if existed"
+echo "removed corpus/train and corpus/test folders, if existed"
 python train_test_split.py
 echo "END TRAIN TEST SPLIT"
 
