@@ -36,7 +36,7 @@ def main():
 
         text = " ".join(text_lines)
 
-        with open(de_tsv_path, encoding="utf-8", newline="") as corpus_file:
+        with open(de_tsv_path, "a+", encoding="utf-8", newline="") as corpus_file:
             text_writer = csv.writer(corpus_file, delimiter="\t")
             text_writer.writerow([new_reg, text])
 
