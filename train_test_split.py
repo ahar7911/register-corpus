@@ -4,16 +4,19 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-def main(train_size : int = None):
+def main(langs : list[str], train_size : int) -> None:
     corpus_dir = Path("corpus")
     if not corpus_dir.exists() or not corpus_dir.is_dir():
         print("corpus directory does not exist or is not a directory, please run standardize.sh", file=sys.stderr)
         sys.exit(1)
-
-    filepaths = list(corpus_dir.glob("*.tsv"))
-    if len(filepaths) == 0:
-        print("corpus directory has no tsv files, please run standardize.sh", file=sys.stderr)
-        sys.exit(1)
+    
+    if langs is None:
+        filepaths = list(corpus_dir.glob("*.tsv"))
+        if len(filepaths) == 0:
+            print("corpus directory has no tsv files, please run standardize.sh", file=sys.stderr)
+            sys.exit(1)
+    else:
+        filepaths = [corpus_dir / f"{lang}.tsv" for lang in langs]
 
     for filepath in filepaths:
         lang = filepath.stem
@@ -75,8 +78,10 @@ def main(train_size : int = None):
 if __name__ == "__main__":
     parser = ArgumentParser(prog="Train test split",
                             description="Splits all corpus in folder 'corpus' into a train and test split")
+    parser.add_argument("--langs", nargs="+",
+                        help="Languages for which to create train test splits. If unspecified, all corpus from corpus directory are used")
     parser.add_argument("--train_size", type=int,
                         help="Size of the training set (if possible, otherwise will do a 50/50 split)")
     args = parser.parse_args()
 
-    main(args.train_size)
+    main(**vars(args))
