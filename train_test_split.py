@@ -16,7 +16,14 @@ def main(langs : list[str], train_size : int) -> None:
             print("corpus directory has no tsv files, please run standardize.sh", file=sys.stderr)
             sys.exit(1)
     else:
-        filepaths = [corpus_dir / f"{lang}.tsv" for lang in langs]
+        filepaths = []
+        for lang in langs:
+            lang_dir = corpus_dir / f"{lang}.tsv"
+            if lang_dir.exists() and lang_dir.is_file():
+                filepaths.append(lang_dir)
+            else:
+                print(f"specified language {lang} has no corresponding corpus tsv file in the corpus directory at {lang_dir}", file=sys.stderr)
+                sys.exit(1)
 
     for filepath in filepaths:
         lang = filepath.stem
