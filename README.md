@@ -25,7 +25,7 @@ The directory also contains a Sankey diagram in `mappings/sankey/sankey.html` th
 ## `utils` folder
 More information about the three corpora used here and the code for their standardization (provided here in `utils` folder) is provided below:
 
-### CORE
+### CORE corus
 The CORE corpora is comprised of the [original CORE corpus in English](https://github.com/TurkuNLP/CORE-corpus.git), [the FreCORE (French) and SweCORE (Swedish) corpora](https://github.com/TurkuNLP/Multilingual-register-corpora.git), and [the FinCORE (Finnish) corpus](https://github.com/TurkuNLP/FinCORE_full.git), all downloaded from TurkuNLP's datasets. We also include register-labeled corpora from a [multilingual TurkuNLP repository](https://github.com/TurkuNLP/pytorch-registerlabeling/tree/main/data) that includes additional register-labeled texts in Arabic, Catalan, Spanish, Farsi, Hindi, Indonesian, Japanese, Norwegian, Portuguese, Russian, Turkish, Urdu, and (Simplified) Chinese. 
 
 The original CORE corpora includes 8 registers and 47 subregisters. We created a mapping that maps either the entire register (and all subregisters) to the new register, or maps individual subregisters to different new registers.
@@ -54,7 +54,7 @@ Comments in the code provide more information about language- or corpus-specific
 #### standardize_core.sh
 This script runs `utils/core/standardize_core.py` on all CORE corpora (i.e. runs it on "en", "fi", "fr", "sv", and "multi").
 
-### Alsatian
+### Alsatian corpus
 A corpus of register-labeled Alsatian texts was provided by the LiLPa (Linguistique, Langues, Parole) research unit of the Université de Strasbourg. 
 
 Each text is found in a subfolder that describes its origin - ALA, ALS_WKP, DIVITAL_parallel, HRM, OLCA, and theatre. 

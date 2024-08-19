@@ -2,7 +2,7 @@
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/ahar7911/register-corpus/blob/master/README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/ahar7911/register-corpus/blob/master/README.fr.md)
 
-Ce dépôt Git contient des scripts permettant de télécharger, de convertir la classification des registres (que nous appelons ici « standardisation ») et d'analyser les corpus utilisés pour la classifications multilingue des registres de textes à l'aide de grands modèles de langue (LLMs ou *large language models*).
+Ce dépôt Git contient des scripts permettant de télécharger, de convertir la classification des registres (que nous appelons ici la « standardisation ») et d'analyser les corpus utilisés pour la classifications multilingue des registres de textes à l'aide de grands modèles de langue (LLMs ou *large language models*).
 
 Pour télécharger les corpus, exécutez les scripts de téléchargement fournis dans chaque sous-dossier du dossier `utils` lorsque vous êtes dans le dossier `corpus-original` (créez le dossier et à partir de celui-ci faites tourner les scripts `../utils/core/download_core.sh` et `../utils/innsbruck/download_innsbruck.sh`). Le corpus alsacien devra être téléchargé manuellement dans le dossier `corpus-original/corpus-alsacien`. Sinon, vous pouvez télécharger manuellement les corpus CORE, alsacien, et allemand Innsbruck et spécifier les chemins d'accès dans le fichier `utils/core/lang2tsv.json` et dans les chemins en haut des fichiers `utils/alsatian/standardize_alsatian.py` et `utils/innsbruck/standardize_innsbruck.py`. 
 
@@ -14,18 +14,18 @@ Un script modifiable `load_env.sh` est utilisé pour charger Python. Chaque scri
 
 Le script `distr_corpus.py` crée un corpus à partir du jeu d'entraînement des corpus de telle sorte que le nombre de textes par registre soit aussi égal que possible, et que le nombre de textes par langue pour chaque registre soit aussi égal que possible. Le corpus est stocké dans `corpus/train/distr.tsv` et un fichier identique est stocké dans `corpus/distr.tsv` pour permettre l'analyse de la distribution des registres. Plus d'informations sur l'exécution du script peuvent être trouvées en lançant `python distr_corpus.py --help`. Ce script est automatiquement exécuté par `standardize.sh`.
 
-## `info` folder
+## Le dossier `info`
 Le dossier `info` contient des informations sur les abréviations utilisées dans ce dépôt Git. `info/reg_abbv.json` associe les abréviations des nouveaux registres à leurs noms complets, et `info/lang2name.json` associe les abréviations des langues utilisées comme noms de fichiers à leurs noms anglais complets.
 
-## `mappings` folder
+## Le dossier `mappings`
 Le dossier `mappings` contient des fichiers JSON qui contiennent des informations sur les correspondances entre les typologies des registres originaux et les typologies des nouveaux registres. `mappings/core_abbv.json` est utilisé dans `utils/core/standardize_core.py` ; `mappings/cahier.json` et `mappings/core.json` sont utilisés dans `utils/alsatian/standardize_alsatian.py` ; et `mappings/innsbruck.json` est utilisé dans `utils/innsbruck/standardize_innsbruck.py`.
 
 Le dossier contient également un diagramme sankey dans le fichier `mappings/sankey/sankey.html` qui visualise la relation entre les registres CORE (utilisés pour étiqueter les corpus CORE) et les registres CAHIER (utilisés pour étiqueter le corpus des textes alsaciens) et les nouveaux registres.
 
-## `utils` folder
+## Le dossier `utils`
 Vous trouverez ci-dessous plus d'informations sur les trois corpus utilisés ici et le code pour leur standardisation (fourni ici dans le dossier `utils`) :
 
-### CORE
+### Corpus CORE
 Les corpus CORE sont composés du [corpus CORE original en anglais](https://github.com/TurkuNLP/CORE-corpus.git), des [corpus FreCORE (français) et SweCORE (suédois)](https://github.com/TurkuNLP/Multilingual-register-corpora.git), et du [corpus FinCORE (finnois)](https://github.com/TurkuNLP/FinCORE_full.git), tous téléchargés à partir des dépôts Github de TurkuNLP. Nous utilisons également un corpus multilangue de textes étiquetés par registre provenant d'un [dépôt Git de TurkuNLP] (https://github.com/TurkuNLP/pytorch-registerlabeling/tree/main/data) qui comporte des textes supplémentaires étiquetés par registre en arabe, catalan, espagnol, farsi, hindi, indonésien, japonais, norvégien, portugais, russe, turc, ourdou, et chinois (simplifié).
 
 Le corpus original de CORE comprend 8 registres et 47 sous-registres. Nous avons créé une correspondance qui associe soit le registre entier (et tous les sous-registres) au nouveau registre, soit des sous-registres individuels à différents nouveaux registres.
@@ -54,7 +54,7 @@ Les commentaires dans le code fournissent plus d'informations sur les modificati
 #### standardize_core.sh
 Ce script exécute `utils/core/standardize_core.py` sur tous les corpus CORE (c'est-à-dire qu'il l'exécute sur « en », « fi », « fr », « sv », et « multi »).
 
-### Alsatian
+### Corpus alsacien
 Un corpus de textes alsaciens étiquetés par registre a été fourni par l'unité de recherche LiLPa (Linguistique, Langues, Parole) de l'Université de Strasbourg. 
 
 Chaque texte se trouve dans un sous-dossier qui décrit son origine - ALA, ALS_WKP, DIVITAL_parallel, HRM, OLCA, et théâtre. 
@@ -66,7 +66,7 @@ Tout le code pour la standardisation du corpus alsacien se trouve dans le dossie
 #### standardize_alsatian.py
 Ce script Python effectue la standardisation du corpus alsacien, trouvé à l'aide de l'objet Path `alsatian_path` en haut du fichier, de ses classifications originales de genre CAHIER vers les nouveaux registres. Le script utilise le fichier `mappings/cahier.json` pour faire correspondre les registres, et utilise également `mappings/core.json` dans un code commenté pour comparer les nouveaux registres convertis à partir des registres CORE et des registres CAHIER, s'ils sont différents. Ces fichiers JSON font correspondre les noms complets des registres CORE ou CAHIER aux abréviations des nouveaux registres dans la paire nom-clé « maps » ; une correspondance avec « unused » spécifie que le registre n'a pas été mis en correspondance. Si un sous-registre est associé à un nouveau registre différent de son registre, la paire nom-clé « exceptions » du registre contiendra un objet JavaScript avec une paire nom-clé qui associe le sous-registre à l'abréviation du nouveau registre auquel il est associé (ou « unused » s'il n'est pas associé).
 
-### German Innsbruck corpus
+### Corpus allemand Innsbruck
 Un corpus de textes allemands étiquetés par genre datant de 1800 à 1950. Pour plus d'informations, consultez le [lien de téléchargement Zenodo] (https://zenodo.org/records/3457917) et le fichier `GermInnC corpus_documentation.pdf` qui se trouve dans le téléchargement. Pour l'instant, seuls les textes de 1901 à 1950 sont utilisés dans la standardisation pour créer le nouveau corpus allemand.
 
 Tout le code pour la standardisation du corpus allemand d'Innsbruck se trouve dans le dossier `utils/innsbruck` :
