@@ -13,7 +13,7 @@ def main():
         except OverflowError:
             maxInt = int(maxInt/10)
     
-    with open(Path("info/reg_abbv.json")) as reg_abbv_file:
+    with open(Path("info/reg_abbv.json")) as reg_abbv_file: # load as dict
         reg_abbv2name = json.load(reg_abbv_file)
 
     corpus_dir = Path("corpus")
@@ -42,7 +42,7 @@ def main():
         percentages = {k : v / total * 100 for k, v in counts.items()}
 
         summary_dir = Path("summaries")
-        if not summary_dir.exists():
+        if not summary_dir.exists(): # make summary dir if does not exist
             summary_dir.mkdir()
         
         with open(summary_dir / f"{lang}.json", "w") as file:

@@ -6,11 +6,11 @@ import csv
 innsbruck_path = Path("corpus-original/innsbruck/GermInnC/1901-1950")
 
 def main():
-    with open(Path("mappings/innsbruck.json")) as mapping_file:
+    with open(Path("mappings/innsbruck.json")) as mapping_file: # loads mapping as a dict
         mapping = json.load(mapping_file)
     
     corpus_dir = Path("corpus")
-    if not corpus_dir.exists():
+    if not corpus_dir.exists(): # make corpus dir if does not exist
         corpus_dir.mkdir()
     
     de_tsv_path = corpus_dir / "de.tsv"

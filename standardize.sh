@@ -11,7 +11,7 @@ echo "START STANDARDIZATION"
 
 # CORE standardization
 source utils/core/standardize_core.sh
-# alsatian standardization
+# Alsatian standardization
 echo
 python utils/alsatian/standardize_alsatian.py
 # German Innsbruck standardization

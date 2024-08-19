@@ -11,6 +11,7 @@ def convert_register(mapping : dict, reg : str, subreg : str) -> str:
         sys.exit(1)
     
     map_data = mapping[reg]
+    # if subregister is an exception to register mapping
     if "exceptions" in map_data and subreg in map_data["exceptions"]:
         return map_data["exceptions"][subreg]
     else:
@@ -20,11 +21,11 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
     # with open(Path("mappings/core.json")) as core_file:
     #   core_mapping = json.load(core_file)
 
-    with open(Path("mappings/cahier.json")) as cahier_file:
+    with open(Path("mappings/cahier.json")) as cahier_file: # loads mapping as a dict
         cahier_mapping = json.load(cahier_file)
     
     corpus_dir = Path("corpus")
-    if not corpus_dir.exists():
+    if not corpus_dir.exists(): # make corpus dir if does not exist
         corpus_dir.mkdir()
     
     al_tsv_path = corpus_dir / "al.tsv"
@@ -45,8 +46,8 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
                 #     core_reg = line.removeprefix("# webRegister: ")
                 elif line and not line.startswith("#"):
                     text_lines.append(line)
-    
-        if not text_lines:
+
+        if not text_lines: # no text found
             print("file contains no text, ignoring")
             continue
         text = " ".join(text_lines)
@@ -59,6 +60,7 @@ def main(): # CAHIER used over CORE, since some documents are not web documents
         cahier_regs = cahier_reg.split(".")
         from_cahier = convert_register(cahier_mapping, cahier_regs[0], cahier_regs[1])
 
+        # # compare registers obtained from core vs. cahier conversion, if different and not a web document
         # if core_reg != "None (not a web document)":
         #     core_regs = core_reg.split(".")
         #     from_core = convert_register(core_mapping, core_regs[0], core_regs[1])

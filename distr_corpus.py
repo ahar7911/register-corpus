@@ -9,14 +9,14 @@ import pandas as pd
 
 def combine_lists(text_lists : list[list[str]], target_len : int) -> list[str]:
     total_length = sum(len(text_list) for text_list in text_lists)
-    if target_len > total_length:
+    if target_len >= total_length: # return all texts, since there aren't enough to need to "choose" which texts to include
         return [text for text_list in text_lists for text in text_list]
 
-    for text_list in text_lists:
+    for text_list in text_lists: # shuffle order of texts so that random ones are chosen
         random.shuffle(text_list)
     
     combined_list = []
-    while len(combined_list) < target_len:
+    while len(combined_list) < target_len: # round robin style, add one text from each language that still has texts, repeat
         for text_list in text_lists:
             if len(text_list) > 0:
                 combined_list.append(text_list.pop(0))
@@ -30,32 +30,36 @@ def get_distr_reg2texts(filepaths : list[Path],
                         max_size : int, 
                         cutoff : int
                         ) -> dict[str, list[str]]:
-    with open(Path("info/reg_abbv.json")) as reg_abbv_file:
+    with open(Path("info/reg_abbv.json")) as reg_abbv_file: # load as dict
         reg_abbv2name = json.load(reg_abbv_file)
 
     print("starting distributed register corpus creation")
+    # map register to list of list of all texts in register per language (one list of texts per language, one list of lists of texts per register)
     reg2texts = {k : [] for k in reg_abbv2name.keys()}
     for filepath in filepaths:
         if not filepath.exists() or not filepath.is_file():
             print(f"filepath {filepath} taken from specified language {filepath.stem} does not exist or is not a file", file=sys.stderr)
             sys.exit(1)
         
-        lang_reg2texts = {k : [] for k in reg_abbv2name.keys()}
+        lang_reg2texts = {k : [] for k in reg_abbv2name.keys()} # map register to list of all texts in register IN THIS LANGUAGE
         with open(filepath, "rt", encoding="utf-8") as src_file:
             src_reader = csv.reader(src_file, delimiter="\t", quoting=csv.QUOTE_NONE)
             for row in src_reader:
                 register, text = row[0], row[1]
                 lang_reg2texts[register].append(text)
+
+        # add language-specific lang_reg2texts to reg2texts
         for reg, texts in lang_reg2texts.items():
             reg2texts[reg].append(texts)
     
-    reg2len = {}
+    reg2len = {} # map register to number of texts in the register
     for reg, text_lists in reg2texts.items():
         reg2len[reg] = sum([len(texts) for texts in text_lists])
-    if max_size is None:
+    if max_size is None: # if max_size is not specified, if it is the minimum of the register lengths above the cutoff
         max_size = min([num for num in reg2len.values() if num > cutoff])
     print(f"number of texts found per register:\n" + "\n".join([f"{reg}: {num}" for reg, num in reg2len.items()]))
 
+    # combine the list of lists of register texts in a way such that each language is represented as much as possible
     for reg, text_lists in reg2texts.items():
         reg2texts[reg] = combine_lists(text_lists, max_size)
     
@@ -78,12 +82,13 @@ def main(langs : list[str], max_size : int, cutoff : int) -> None:
         print("corpus directory does not exist or is not a directory, please run standardize.sh", file=sys.stderr)
         sys.exit(1)
     
+    # use texts from training corpora, runs train test splits if they haven't been run yet
     train_dir = corpus_dir / "train"
     if not train_dir.exists() or not train_dir.is_dir() or not any(train_dir.iterdir()):
         import train_test_split
         train_test_split.main()
 
-    if langs is None:
+    if langs is None: # langs to make corpora from are not specified, use all corpora found in train directory
         filepaths = list(train_dir.glob("*.tsv"))
         if len(filepaths) == 0:
             print("corpus directory has no tsv files, please run standardize.sh", file=sys.stderr)
@@ -94,7 +99,7 @@ def main(langs : list[str], max_size : int, cutoff : int) -> None:
     distr_train_path = train_dir / "distr.tsv"
     if distr_train_path in filepaths:
         filepaths.remove(distr_train_path)
-        print("distr.tsv included in original filepaths, now removed")
+        print("train/distr.tsv included in original filepaths, now removed")
     
     print(f"languages used in making distr corpus: {', '.join(sorted([filepath.stem for filepath in filepaths]))}")
     
@@ -105,8 +110,9 @@ def main(langs : list[str], max_size : int, cutoff : int) -> None:
         distr_texts.extend(texts)
         distr_regs.extend([reg] * len(texts))
     
+    # save in same format as corpus tsv files
     distr_df = pd.DataFrame(zip(distr_regs, distr_texts))
-    distr_df.to_csv(corpus_dir / "distr.tsv", sep="\t", header=False, index=False) # also save to corpus so that distributions can be analyzed
+    distr_df.to_csv(corpus_dir / "distr.tsv", sep="\t", header=False, index=False) # also save distr.tsv to corpus dir so that distributions can be analyzed
     distr_df.to_csv(train_dir / "distr.tsv", sep="\t", header=False, index=False) 
     print("saved distributed register corpus to corpus/distr.tsv and corpus/train/distr.tsv")
 

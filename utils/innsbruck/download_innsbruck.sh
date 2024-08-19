@@ -1,9 +1,9 @@
 #! /bin/bash
 
 mkdir -p ZIPS
-echo "downloading innsbruck zip file"
+echo "downloading innsbruck zip file to ZIPS subfolder"
 wget "https://zenodo.org/records/3457917/files/GermInnC_release23092019.zip" -O ZIPS/innsbruck.zip
-echo "download complete"
+echo "innsbruck download complete"
 echo
 
 mkdir -p innsbruck
